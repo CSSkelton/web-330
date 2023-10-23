@@ -1,0 +1,48 @@
+#container {
+    margin-top: 50px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+#icon-mode:hover {
+    cursor: pointer;
+}
+
+#icon-text {
+    padding-left: 10px;
+}
+
+.pull-right {
+    float: left;
+}
+
+.return-home {
+    color: #4F3674;
+    text-decoration: none;
+}
+
+.return-home:hover {
+    background-color: #D6A800;
+    color: #4F3674;
+}
+
+.return-home:visited {
+    color: #3C275A;
+}
+
+.form {
+    display: inline-grid;
+    grid-template-columns: auto;
+}
+
+.form-field {
+    padding: 20px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.app-header {
+    text-align: center;
+}
