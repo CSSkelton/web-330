@@ -93,6 +93,7 @@ span {
 
 .card-content {
     padding: 2px 16px;
+    color: var(--text-color);
 }
 
 .btn {

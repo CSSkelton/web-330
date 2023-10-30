@@ -1,0 +1,7 @@
+@import url(../site.css);
+@import url(../theme.css);
+
+.assign-results-text {
+    text-align: center;
+    font-size: 28px;
+}

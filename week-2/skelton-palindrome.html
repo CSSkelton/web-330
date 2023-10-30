@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!--
+        Author: Cody Skelton
+        Email: cskelton@my365.bellevue.edu
+        Date: 10.29.2023
+        HTML structure sourced from WEB 231's week 8 file
+        CSS file sourced from WEB 330 course requirements
+        JS algorithms provided by Professor Krasso, via assignment
+        Notes: Had trouble assigning onclick event externally in JS file
+        Resorted to registering it via HTML
+        Additionally, some style differences between provided final solution
+            and this page.
+    -->
+
+    <head>
+        <title>WEB 330 - Enterprise JavaScript II</title>
+        <meta charset="utf-8">
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="skelton-palindrome.css" rel="stylesheet" type="text/css">
+        <script src="skelton-palindrome.js"></script>
+        <script src="../theme.js"></script>
+    </head>
+    
+    <body class="light-theme">
+        <div id="container">
+
+            <h1 class="app-header">Welcome to the Palindrome App!</h1>
+
+            <div id="card-container">
+                <div id="input" class="card">
+                    <div class="card-title">Palindrome Checker</div>
+                    <div class="card-content">
+                        <div class="form">
+                            <div class="form-field">
+                                <label for="txtPhrase">Phrase Value: </label>
+                                <input type="text" id="txtPhrase" name="txtPhrase" class="input">
+                            </div>
+
+                            <div class="form-field">
+                                <button class="btn btn-primary full-width" id="btnCheckPhrase" onclick="checkPalindrome()">Check Phrase</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="../index.html" class="return-home">Return</a>
+
+                <div id="results" class="card">
+                    <div class="card-title">Palindrome Results</div>
+                    <div class="card-content" id="assign-results-header"></div>
+                    <div class="card-content assign-results-text" id="assign-results"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>
