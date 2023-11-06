@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!--
+    Author: Cody Skelton
+    Date: 11.05.2023
+    Program Code sourced from Bellevue University's WEB 330 Program Requirements
+-->
+<html lang="en">
+    <head>
+        <title>WEB 330 - Enterprise JavaScript II</title>
+        <meta charset="utf-8">
+        <link href="skelton-restaurant.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
+    </head>
+
+    <body class="dark-theme">
+        <div id="container">
+            <h1 class="app-header">Welcome to the Restaurant App!</h1>
+
+            <div id="card-container">
+                <div id="input" class="card">
+                    <div class="card-title">Restaurant Menu</div>
+                    <div class="card-content" id="menu-content">
+                        <div class="card">
+                            <div class="card-title">Beverages</div>
+                            <div class="card-content" id="beverage">
+                                <label for="soda">                                
+                                    <input type="checkbox" class="beverage" id="soda" name="soda" value="3.30">Soda ($3.30)
+                                </label><br>
+                                <label for="sweet-tea">
+                                    <input type="checkbox" class="beverage" id="sweet-tea" name="sweet-tea" value="3.30">Sweet Tea ($3.30)
+                                </label><br>
+                                <label for="iced-coffee">
+                                    <input type="checkbox" class="beverage" id="iced-coffee" name="iced-coffee" value="2.49">Iced Coffee ($2.49)
+                                </label><br>
+                                <label for="bottled-water">
+                                    <input type="checkbox" class="beverage" id="bottled-water" name="bottled-water" value="2.15">Bottled Water ($2.15)
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-title">Appetizers</div>
+                            <div class="card-content" id="appetizer">
+                                <label for="nachos">
+                                    <input type="checkbox" class="appetizer" id="nachos" name="nachos" value="6.60">Nachos ($6.60)
+                                </label><br>
+                                <label for="chips-and-salsa">
+                                    <input type="checkbox" class="appetizer" id="chips-and-salsa" name="chips-and-salsa" value="5.50">Chips and Salsa ($5.50)
+                                </label><br>
+                               <label for="pretzel">
+                                    <input type="checkbox" class="appetizer" id="pretzel" name="pretzel" value="8.80">Pretzel with Cheese ($8.80)
+                               </label><br>
+                               <label for="pickles">
+                                    <input type="checkbox" class="appetizer" id="pickles" name="pickles" value="8.25">Fried Pickles ($8.25)
+                               </label>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-title">Main Courses</div>
+                            <div class="card-content" id="main-course">
+                                <label for="tacos">
+                                    <input type="checkbox" class="main-course" id="tacos" name="tacos" value="9.70">Street Tacos ($9.70)
+                                </label><br>
+                                <label for="wings">
+                                    <input type="checkbox" class="main-course" id="wings" name="wings" value="12.80">Boneless Wings ($12.80)
+                                </label><br>
+                                <label for="burger">
+                                    <input type="checkbox" class="main-course" id="burger" name="burger" value="12.65">Cheeseburger with Fries ($12.65)
+                                </label><br>
+                                <label for="wrap">
+                                    <input type="checkbox" class="main-course" id="wrap" name="wrap" value="9.65">Chicken Wrap with Salad ($9.65)
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-title">Desserts</div>
+                            <div class="card-content" id="dessert">
+                                <label for="ice-cream">
+                                    <input type="checkbox" class="dessert" id="ice-cream" name="ice-cream" value="4.30">Ice Cream ($4.30)
+                                </label><br>
+                                <label for="cake">
+                                    <input type="checkbox" class="dessert" id="cake" name="cake" value="5.40">Chocolate Cake ($5.40)
+                                </label><br>
+                                <label for="pie">
+                                    <input type="checkbox" class="dessert" id="pie" name="pie" value="3.80">Apple Pie ($3.80)
+                                </label><br>
+                                <button class="btn btn-primary full-width" id="btnOrder">Place Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="../index.html" class="return-home">Return</a>
+
+                <div id="results" class="card">
+                    <div class="card-title">Order Summary</div>
+                    <div class="card-content assign-results-text" id="order-total"></div>
+                </div>
+            </div>
+        </div>
+
+        <script type="module">
+            import { Bill, Beverage, MainCourse, Dessert, Appetizer } from "./js/index.js";
+
+            const mainCoursesEl = document.getElementById("main-course");
+            const mainCourses = mainCoursesEl.getElementsByTagName("input");
+            const beverageEl = document.getElementById("beverage");
+            const beverages = beverageEl.getElementsByClassName("beverage");
+            const appetizerEl = document.getElementById("appetizer");
+            const appetizers = appetizerEl.getElementsByClassName("appetizer");
+            const dessertEl = document.getElementById("dessert");
+            const desserts = dessertEl.getElementsByClassName("dessert");
+            const button = document.getElementById("btnOrder");
+
+            button.addEventListener("click", totalOrder);
+            
+            function totalOrder() {
+                let bill = new Bill();
+
+                for (let mainCourse of mainCourses) {
+                    if (mainCourse.checked) {
+                        bill.addMainCourse(new MainCourse(mainCourse.name, mainCourse.value));
+                    }
+                }
+                for (let beverage of beverages) {
+                    if (beverage.checked) {
+                        bill.addBeverage(new Beverage(beverage.name, beverage.value));
+                    }
+                }
+                for (let appetizer of appetizers) {
+                    if (appetizer.checked) {
+                        bill.addAppetizer(new Appetizer(appetizer.name, appetizer.value));
+                    }
+                }
+                for (let dessert of desserts) {
+                    if (dessert.checked) {
+                        bill.addDessert(new Dessert(dessert.name, dessert.value));
+                    }
+                }
+
+                let total = bill.getTotal();
+                document.getElementById("order-total").innerHTML = "Your order total is $" + total; 
+            }
+        </script>
+    </body>
+</html>

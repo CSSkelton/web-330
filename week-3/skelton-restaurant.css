@@ -1,0 +1,17 @@
+/*
+* Author: Cody Skelton
+* Date: 11.05.2023
+* Code sourced from Bellevue University's WEB 330 Program Requirements
+*/
+
+@import url(../site.css);
+@import url(../theme.css);
+
+.assign-results-text {
+   text-align: center; 
+}
+
+#menu-content {
+    display: grid;
+    grid-template-columns: auto auto;
+}
