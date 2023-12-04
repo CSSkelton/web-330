@@ -168,9 +168,6 @@ tr {
     color: var(--table-header-color);
 }
 
-#table-hover {
-}
-
 tr:hover {
     background-color: var(--table-hover-background-color);
     color: var(--table-hover-color);

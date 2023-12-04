@@ -27,7 +27,7 @@
                                 <input type="text" id="txtFoodItem" name="txtFoodItem" class="input">
                             </div>
                         </div>
-                        <p><span id="foodList">(Ex: Egg, Apple, Hamburger, Fries, Banana, Soda)</span></p>
+                        <p><span id="foodList"></span></p>
                         <div class="form">
                             <div class="form-field">
                                 <button class="btn btn-primary full-width" id="btnSearch">Search</button>
@@ -41,37 +41,44 @@
                 <div id="results" class="card">
                     <div class="card-title">Search Results</div>
                     <div class="card-content">
-                        <table class="table">
-                            <tr>
-                                <th>Name</th>
-                                <th>Calories</th>
-                            </tr>
-                            <div id="results-table-data"></div>
-                        </table>
+                        <div id="results-table-data"></div>
                     </div>
                 </div>
             </div>
         </div>
         <script type="module">
             import { CalorieConverter } from './js/calorie-converter.js';
-
-            const txtFoodItemEl = (document.getElementById("txtFoodItem").value).toLowerCase();
+            
             document.getElementById("btnSearch").addEventListener("click", search);
             document.getElementById("txtFoodItem").addEventListener("keyup", search);
+            displayFoodList();
 
-            console.log(txtFoodItemEl);
+            function search() {
+                //Declarations
+                const txtFoodItemEl = (document.getElementById("txtFoodItem").value).toLowerCase();
 
-            function search(txtFoodItemEl){
-                console.log(CalorieConverter.data[0]);    //Test 1: Pass
                 const foods = CalorieConverter.find(txtFoodItemEl); 
-                console.log(foods[0]);  //Test 2: Fail. Result: Undefined
-                
-                let tableData = "";
+
+                //
+                let tableData = "<table class='table'<tr><th>Name</th><th>Calories</th></tr>";
                 for (let food of foods) {
-                    tableData += "<tr><td>" + `${food.name}` + "</td><td>" + `${food.calories}` + "</td></tr>";
+                    tableData += `<tr><td>${food.name}</td><td>${food.calories}</td></tr>`;
                 }
 
+                tableData += "</table>"
                 document.getElementById("results-table-data").innerHTML = tableData;
+            }
+
+            function displayFoodList() {
+                let foodList = CalorieConverter.data;
+                let foodListData = "(Ex: ";
+
+                for (let food of foodList) {
+                    foodListData += `${food.name}, `;
+                }
+
+                foodListData += ")";
+                document.getElementById("foodList").innerHTML = foodListData;
             }
         </script>        
     </body>
