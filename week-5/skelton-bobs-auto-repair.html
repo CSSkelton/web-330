@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>WEB 330 Enterprise JavaScript II</title>
+        <meta charset="utf-8">
+        <link href="skelton-bobs-auto-repair.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>    
+    <body class="dark-theme">
+        <div id="container">
+            <h1 class="app-header">Welcome to Bob's Automotive Repair Shop!</h1>
+
+            <div id="card-container">
+                <div class="card" id="input">
+                    <div class="card-title">Product Listing</div>
+                    <div class="card-content">
+                        <div id="cart-component"></div>
+                        <div class="form">
+                            <div class="form-field">
+                                <label for="productList">Choose a product: </label>
+                                <select id="productList">
+                                    <option value="select">--Select--</option>
+                                    <option value="19.99">Oil Change</option>
+                                    <option value="18.44">Filter Replacement</option>
+                                    <option value="9.99">Wiper Fluid Refill</option>
+                                </select>
+                                <br>
+                                <i id="cart-message">To view your shopping cart click on the cart icon</i>
+                            </div>
+                        </div>
+                        <br>
+                        
+                        <button class="btn btn-primary full-width" id="btnAddProduct">Add to Cart</button>
+                    </div>
+                </div>
+
+                <a href="../index.html" class="return-home">Return</a>
+
+                <div class="card" id="cart">
+                    <div class="card-title">Shopping Cart</div>
+                    <table class="table" id="shoppingCart">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                        </tr>
+                        <tr>
+                            <td>0001</td>
+                            <td>Oil Change</td>
+                            <td>19.99</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            import { Product, ShoppingCart } from './js/index.js';
+
+            const shoppingCart = new ShoppingCart();
+            document.getElementById("btnAddProduct").addEventListener("click", setCartCount);
+
+            function setCartCount() {
+                const productList = document.getElementById("productList").value;
+                const product = productList.options[productList.selectedIndex].text;
+                const productValue = productList.options[productList.selectedIndex].value;
+            }
+        </script>
+    </body>
+
+</html>

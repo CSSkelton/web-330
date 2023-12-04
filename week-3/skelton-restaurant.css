@@ -4,8 +4,8 @@
 * Code sourced from Bellevue University's WEB 330 Program Requirements
 */
 
-@import url(../site.css);
-@import url(../theme.css);
+@import url(../styles/site.css);
+@import url(../styles/theme.css);
 
 .assign-results-text {
    text-align: center; 

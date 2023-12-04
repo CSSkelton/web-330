@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!--
+        Title: skelton-calorie.html
+        Author: Cody Skelton
+        Date: 11.12.2023
+        Description: Assignment 4.2 Calorie App HTML file
+    -->
+
+    <head>
+        <title>WEB 330 - Enterprise JavaScript II</title>
+        <meta charset="utf-8">
+        <link href="skelton-calorie.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
+    </head>
+    <body class="dark-theme">
+        <div id="container">
+            <h1 class="app-header">Welcome to the Calorie App!</h1>
+
+            <div id="card-container">
+                <div id="input" class="card">
+                    <div class="card-title">Calorie Search Form</div>
+                    <div class="card-content">
+                        <div class="form">
+                            <div class="form-field">
+                                <label for="txtFoodItem">Enter a food item: </label>
+                                <input type="text" id="txtFoodItem" name="txtFoodItem" class="input">
+                            </div>
+                        </div>
+                        <p><span id="foodList">(Ex: Egg, Apple, Hamburger, Fries, Banana, Soda)</span></p>
+                        <div class="form">
+                            <div class="form-field">
+                                <button class="btn btn-primary full-width" id="btnSearch">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="../index.html" class="return-home">Return</a>
+
+                <div id="results" class="card">
+                    <div class="card-title">Search Results</div>
+                    <div class="card-content">
+                        <table class="table">
+                            <tr>
+                                <th>Name</th>
+                                <th>Calories</th>
+                            </tr>
+                            <div id="results-table-data"></div>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="module">
+            import { CalorieConverter } from './js/calorie-converter.js';
+
+            const txtFoodItemEl = (document.getElementById("txtFoodItem").value).toLowerCase();
+            document.getElementById("btnSearch").addEventListener("click", search);
+            document.getElementById("txtFoodItem").addEventListener("keyup", search);
+
+            console.log(txtFoodItemEl);
+
+            function search(txtFoodItemEl){
+                console.log(CalorieConverter.data[0]);    //Test 1: Pass
+                const foods = CalorieConverter.find(txtFoodItemEl); 
+                console.log(foods[0]);  //Test 2: Fail. Result: Undefined
+                
+                let tableData = "";
+                for (let food of foods) {
+                    tableData += "<tr><td>" + `${food.name}` + "</td><td>" + `${food.calories}` + "</td></tr>";
+                }
+
+                document.getElementById("results-table-data").innerHTML = tableData;
+            }
+        </script>        
+    </body>
+</html>

@@ -1,0 +1,16 @@
+/**
+    Title: skelton-calorie.css
+    Author: Cody Skelton
+    Date: 11.12.2023
+    Description: Assignment 4.2 Calorie App CSS file
+*/ 
+
+@import url(../styles/site.css);
+@import url(../styles/theme.css);
+
+#foodList {
+    float: right;
+    color: #df546a;
+    size: 12px;
+    letter-spacing: 2px;
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>WEB 330 - Enterprise JavaScript II</title>
+        <meta charset="utf-8">
+        <link href="skelton-future-value.css" type="text/css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
+        <script src="js/validator.js"></script>
+        <script src="js/finance-calculator.js"></script>
+    </head>
+    <body class="dark-theme">
+        <div id="container">
+            <h1 class="app-header">Welcome to the Future Value App!</h1>
+
+            <div id="card-container" class="container">
+                <div class="card">
+                    <div class="card-title">Future Value Calculator</div>
+                    <div class="col-12 danger row" id="errorLog"></div>
+                    <div class="card-content">
+                        <div class="form">
+                            <div class="form-field row">
+                                <label for="txtMonthlyPayment" class="form-label col-5">Monthly Payment: </label>
+                                <input type="text" name="txtMonthlyPayment" id="txtMonthlyPayment" class="input col-7">
+                            </div>
+                            <div class="form-field row">
+                                <label for="txtYearlyRate" class="form-label col-5">Interest Rate: </label>
+                                <input type="text" name="txtYearlyRate" id="txtYearlyRate" class="input col-7">
+                            </div>
+                            <i class="danger">Enter 11% as 11.1:</i>
+                            <div class="form-field row">
+                                <label for="listNumOfYears" class="form-label col-5">Number of Years</label>
+                                <select class="drop-down-menu col-7" id="listNumOfYears" name="listNumOfYears">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <button class="btn btn-primary full-width" id="btnCalculate">Calculate</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="../index.html" class="return-home">Return</a>
+
+                <div class="card row">
+                    <div class="card-title">Calculation as of <span id="today"></span></div>
+                    <div class="card-content" id="futureValue"></div>
+                </div>
+            </div>
+        </div>
+        <script type="module">
+            import { FinanceCalculator } from "./js/finance-calculator.js";
+            import { Validator } from "./js/validator.js";
+            const date = new Date();
+            document.getElementById("today").innerHTML = date.toLocaleDateString("en-US");
+            const button = document.getElementById("btnCalculate");
+            button.addEventListener("click", calculate);
+            
+            function calculate() {
+                const monthlyPayment = document.getElementById("txtMonthlyPayment").value;
+                const rate = document.getElementById("txtYearlyRate").value;
+                const years = document.getElementById("listNumOfYears").value;
+                const errorLogEl = document.getElementById("errorLog");
+
+                let monthlyPaymentValidator = new Validator("Monthly Payment", monthlyPayment);
+                monthlyPaymentValidator.addRequiredField();
+                monthlyPaymentValidator.addRequiredFloatField();
+                monthlyPaymentValidator.addFloatMinField(100);
+
+                let rateValidator = new Validator("Interest Rate", rate);
+                rateValidator.addRequiredField();
+                rateValidator.addRequiredFloatField();
+                rateValidator.addFloatMaxField(100);
+
+                let errorLog = [];
+
+                if (!monthlyPaymentValidator.validate()) {
+                    for (let msg of monthlyPaymentValidator.messages){
+                        errorLog.push(msg);
+                    }
+                }
+
+                if (!rateValidator.validate()) {
+                    for (let msg of rateValidator.messages) {
+                        errorLog.push(msg);
+                    }
+                }
+
+                if (monthlyPaymentValidator.validate() && rateValidator.validate()) {
+                    errorLogEl.innerHTML = "";
+                    let futureValue = FinanceCalculator.calculateFutureValue(monthlyPayment, rate, years);
+                    document.getElementById("futureValue") = futureValue;
+                } else {
+                    let errorLogMessage = "";
+                    for (let msg of errorLog) {
+                        errorLogMessage += msg;
+                    }
+                    errorLogEl.innerHTML = errorLogMessage;
+                }
+            }
+
+        </script>
+    </body>
+</html>

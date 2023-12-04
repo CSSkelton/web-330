@@ -1,0 +1,13 @@
+@import url(../styles/site.css);
+@import url(../styles/theme.css);
+
+#cart-message{
+    float: right;
+    color: #df546a;
+    size: 12px;
+    word-spacing: 2px;
+}
+
+i:hover {
+    cursor: pointer;
+}
