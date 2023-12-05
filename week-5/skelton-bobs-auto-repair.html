@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="js/cart-component.js"></script>
     </head>    
-    <body class="dark-theme">
+    <body class="light-theme">
         <div id="container">
             <h1 class="app-header">Welcome to Bob's Automotive Repair Shop!</h1>
 
@@ -21,7 +21,7 @@
                         <div class="form">
                             <div class="form-field">
                                 <label for="productList">Choose a product: </label>
-                                <select id="productList">
+                                <select name="productList" id="productList">
                                     <option value="select">--Select--</option>
                                     <option value="19.99">Oil Change</option>
                                     <option value="18.44">Filter Replacement</option>
@@ -42,7 +42,7 @@
                 <div class="card" id="cart">
                     <div class="card-title">Shopping Cart</div>
                     <div class="card-content">
-                        <div class="shopping-cart"></div>
+                        <div id="shopping-cart"></div>
                     </div>
                 </div>
             </div>
@@ -54,13 +54,37 @@
 
             const shoppingCart = new ShoppingCart();
             setCartCount();
-            document.getElementById("btnAddProduct").addEventListener("click", setCartCount);
+            document.getElementById("btnAddProduct").onclick = function() {
+                const productList = document.getElementById("productList");
+                const product = productList.options[productList.selectedIndex].text;
+                const productValue = productList.options[productList.selectedIndex].value;
+
+                
+
+                if (product === "--Select--") {
+                    alert("Please select an item to add!");
+                } else {
+                    const newProduct = new Product(product, productValue);
+                    alert(`${product} was added to your shopping cart!`);
+                    shoppingCart.add(newProduct);
+                    productList.value = "select";
+                    setCartCount();
+                }
+            }
+
+            document.getElementById("cartIcon").onclick = function() {
+                let cartDisplayTable = `<table class="table"><tr><th>ID</th><th>Name</th><th>Price</th></tr>`;
+
+                for (let item of shoppingCart) {
+                    cartDisplayTable += `<tr><td>${item.id}</td><td>${item.name}</td><td>${item.price}</td></tr>`;
+                }
+
+                cartDisplayTable += `</table>`;
+                document.getElementById("shopping-cart").innerHTML = cartDisplayTable;
+            }
 
             function setCartCount() {
-                const productList = document.getElementById("productList").value;
-                const product = productList.options[productList.selectedIndex].text;
-                console.log(product);  
-                const productValue = productList.options[productList.selectedIndex].value;
+                document.getElementById('cart-count').innerHTML = shoppingCart.count().toString();
             }
         </script>
     </body>

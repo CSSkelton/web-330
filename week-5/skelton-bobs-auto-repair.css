@@ -4,7 +4,7 @@
 #cart-message{
     float: right;
     color: #df546a;
-    size: 12px;
+    font-size: 12px;
     word-spacing: 2px;
 }
 
@@ -12,3 +12,9 @@ i:hover {
     cursor: pointer;
 }
 
+cart-component {
+    color: var(--card-title-color);
+    display: inline-block;
+    font-size: larger;
+    padding-left: 48%;
+}

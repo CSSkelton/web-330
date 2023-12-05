@@ -18,6 +18,7 @@ body.light-theme {
     --input-border-color: #ccc;
     --table-header-background-color: #4f3674;
     --table-header-color: #fff;
+    --table-row-color: #4f3674;
     --table-border-color: #ddd;
     --table-hover-background-color: #d6a800;
     --table-hover-color: #4f3674;
@@ -43,6 +44,7 @@ body.dark-theme {
     --input-border-color: #303030;
     --table-header-background-color: #d176e1;
     --table-header-color: #fff;
+    --table-row-color: #fff;
     --table-border-color: #303030;
     --table-hover-background-color: #7d4787;
     --table-hover-color: #fff;
@@ -162,6 +164,10 @@ span {
 
 .table th, td {
     border: 1px solid var(--table-border-color);
+}
+
+.table td {
+    color: var(--table-row-color);
 }
 
 tr {
