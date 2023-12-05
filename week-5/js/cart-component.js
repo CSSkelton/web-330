@@ -1,3 +1,12 @@
+/**
+ *  Title: cart-component.js
+ *  Author: Cody Skelton
+ *  Date: 11.19.2023
+ *  Detail: WEB 330 Assignment 5.2 - Bob's Automotive Repair Shop Cart Component
+ *  Sources: Program requirements sourced from Bellevue University's WEB 330 Program Requirements
+ */
+
+
 class CartComponent extends HTMLElement {
     constructor () {
         super();
