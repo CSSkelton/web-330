@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<!-- 
+    Code Attribution
+    Title: skelton-whatabook2.html
+    Author: Cody Skelton
+    Date: 12.06.2023
+    Description - Bellevue University WEB 330 Week 8 Assignment - WhatABook, Part 2
+    Code requirements sourced from WEB 330 Week 8 Assignment
+-->
+<html lang="en">
+    <head>
+        <title>WEB 330 - Enterprise JavaScript II</title>
+        <meta charset="utf-8">
+        <link href="skelton-whatabook2.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
+    </head>
+    <body class="dark-theme">
+        <div id="container">
+            <h1 class="app-header">Welcome to WhatABook, Part 2 App!</h1>
+
+            <div id="card-container">
+                <div class="card">
+                    <div class="card-title">Book Listing</div>
+                    <div class="card-content" id="bookListing"></div>
+                </div>
+
+                <a href="../index.html" class="return-home">Return</a>
+
+                <div class="card">
+                    <div class="card-title">Selected Book</div>
+                    <div class="card-content" id="selectedBook"></div>
+                </div>
+            </div>
+        </div>
+
+        <script type="module">
+            import { HttpClient } from './http-client.js';
+
+            const http = new HttpClient();
+            const isbns = [
+                '0345339681',
+                '0261103571',
+                '9780593099322',
+                '9780261102361',
+                '9780261102378',
+                '9780590302715',
+                '9780316769532',
+                '9780743673565',
+                '9780590405959'
+            ]
+            const params = {
+                "bibkeys": `ISBN:${isbns.join(",")}`,
+                "format": "json",
+                "jscmd": "details"
+            };
+
+            http.get("https://openlibrary.org/api/books", params).then(res => {
+                console.log(res);
+
+                document.getElementById("bookListing").innerHTML = buildHtmlString(res, "table");
+
+                addIsbnClickEvents();
+            })
+            .catch(e => {
+                console.log(e);
+            })
+
+            function getBook(e) {
+                e.preventDefault();
+                let self = this;
+                let isbn = self.innerText;
+                const params = {
+                    "bibkeys": isbn,
+                    "format": "json",
+                    "jscmd": "details"
+                };
+                console.log(params);
+                http.get("https://openlibrary.org/api/books", params).then(res => {
+                    document.getElementById("selectedBook").innerHTML = buildHtmlString(res, "ul");
+                })
+                .catch(e => {
+                    console.log(e);
+                })
+            }
+
+            function buildHtmlString(res, format) {
+                let tableString = "<table><tr><th>ISBN</th><th>Title</th><th>Description</th><th>Pages</th><th>Authors</th></tr>";
+                let ulString = "";
+                for (let key in res) {
+                    ulString += `<ul style="list-style-type: none;">`;
+
+                    if (res.hasOwnProperty(key))
+                    {
+                        let authors = [];
+                        if (res[key].details.authors)
+                        {
+                            authors = res[key].details.authors.map(function(author) {
+                                return author.name;
+                            })
+                        }
+
+                        let book = {
+                            isbn: res[key].details.isbn_13 ? res[key].details.isbn_13 : res[key].details.isbn_10,
+                            title: res[key].details.title,
+                            description: res[key].details.subtitle ? res[key].details.subtitle: "N/A",
+                            pages: res[key].details.number_of_pages ? res[key].details.number_of_pages : "N/A",
+                            authors: authors.join(",")
+                        }
+
+                        ulString += `<li><b>ISBN: </b>${book.isbn}</li><li><b>Title: </b>${book.title}</li><li><b>Description: </b>${book.description}</li><li><b>Pages: </b>${book.pages}</li><li><b>Authors: </b>${book.authors}</li>`;
+                        tableString += `<tr><td><a href="#" class="isbn-link">${book.isbn}</a></td><td>${book.title}</td><td>${book.description}</td><td>${book.pages}</td><td>${book.authors}</td></tr>`;
+                    }
+                }
+
+                tableString += "</table>";
+                if (format == "table") {
+                    return tableString;
+                } else {
+                    return ulString;
+                }
+            }
+
+            function addIsbnClickEvents() {
+                let viewButtons = document.querySelectorAll(".isbn-link");
+                console.log(viewButtons);
+                for (let index=0; index<viewButtons.length; index++) {
+                    viewButtons[index].addEventListener("click", getBook);
+                }
+            }
+
+        </script>
+    </body>
+</html>
